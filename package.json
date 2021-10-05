@@ -24,12 +24,22 @@
     "generator-entity": "node ./generator/index.js && npm run lint-fix && sequelize db:migrate"
   },
   "dependencies": {
+    "await-stream-ready": "^1.0.1",
+    "dayjs": "^1.10.7",
     "egg": "^2.6.1",
+    "egg-cors": "^2.2.3",
+    "egg-jwt": "^3.1.7",
+    "egg-mailer": "^1.5.0",
     "egg-passport": "^2.1.1",
     "egg-passport-github": "^1.0.0",
     "egg-scripts": "^2.6.0",
     "egg-sequelize": "^6.0.0",
-    "mysql2": "^2.3.0"
+    "egg-validate": "^2.0.2",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "mysql2": "^2.3.0",
+    "svg-captcha": "^1.4.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",

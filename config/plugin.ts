@@ -18,6 +18,23 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-passport-github',
   },
+  //  鉴权
+  jwt: {
+    enable: true,
+    package: 'egg-jwt',
+  },
+  // 跨域
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
+  /**
+ * 启用插件 egg-validate，用于参数验证
+ */
+  validate: {
+    enable: true,
+    package: 'egg-validate',
+  },
 };
 
 export default plugin;

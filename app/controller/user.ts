@@ -103,38 +103,13 @@ class UserController extends Controller {
    */
   async signIn() {
     const { ctx } = this;
-    const loginRole = {
-      username: {
-        type: 'string',
-        required: true,
-        min: 2,
-        max: 60,
-        trim: true,
-        example: 'Imfdj',
-        description: '用户名',
-      },
-      password: {
-        type: 'string',
-        required: true,
-        min: 3,
-        max: 30,
-        trim: true,
-        example: '123123',
-        description: '用户密码',
-      },
-      captcha: {
-        type: 'string',
-        required: true,
-      }
-    }
-    console.log(ctx.request.body,typeof ctx.request.body.captcha,11111111)
     try {
-      ctx.validate(loginRole, ctx.request.body)
+      ctx.validate(ctx.rule.loginRole, ctx.request.body)
     } catch (error) {
       ctx.body = error
       return;
     }
-    
+
     const { username, password, captcha } = ctx.request.body;
     let captchaState = await ctx.service.user.checkCaptcha(captcha);
     if (!captchaState.state) {

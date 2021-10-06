@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const dayjs = require('dayjs');
 const lodash = require('lodash');
+const path = require('path');
 class AppBootHook {
   constructor(app) {
     this.app = app;
@@ -10,7 +11,12 @@ class AppBootHook {
   configWillLoad() { }
 
   // 所有配置已经加载完毕，用于自定义 Loader 挂载。
-  configDidLoad() { }
+  configDidLoad() {
+
+    // 加载所有的校验规则
+    const directory = path.join(this.app.config.baseDir, 'app/validate');
+    this.app.loader.loadToApp(directory, 'validate');
+  }
 
   // 插件的初始化
   async didLoad() { }

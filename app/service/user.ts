@@ -17,10 +17,17 @@ export default class Test extends Service {
      * 
      * 用户验证帐号密码
      */
-    async login(payload: { username: string, password: string }) {
+    async login(payload: { username: string, password: string, captcha: string }) {
         const { ctx } = this;
-        const { username, password } = payload;
-        console.log(username, 123798)
+        const { username, password, captcha } = payload;
+        const captchaState = await ctx.service.user.checkCaptcha(captcha);
+        if (!captchaState.state) {
+            return {
+                //用户不存在
+                __code_wrong: 40001,
+                msg: captchaState.msg
+            }
+        }
         const user = await ctx.model.Users.findOne(
             {
                 where: { username },
@@ -98,7 +105,7 @@ export default class Test extends Service {
      */
     async checkCaptcha(captcha: string | null) {
         const { ctx } = this
-        if (captcha) {
+        if (captcha && ctx.session.captcha) {
             if (captcha.toLowerCase() === ctx.session.captcha.text.toLowerCase() && ctx.session.captcha.expires > Math.floor(Date.now() / 1000)) {
                 //验证通过
                 return {
@@ -112,6 +119,11 @@ export default class Test extends Service {
                     msg: '验证码错误或者过期，请刷新验证码重试'
                 };
             }
+        } else if (!ctx.session.captcha) {
+            return {
+                state: false,
+                msg: '验证码未获取，请获取验证码'
+            };
         } else {
             return {
                 state: false,
@@ -139,6 +151,11 @@ export default class Test extends Service {
     async getMailCode(payload: { email: string, code: string }) {
         const { app, ctx } = this;
         const { email, code } = payload;
+        const isDuplicateEmail = await ctx.service.tools.uerTool.DuplicateEmail(email);
+        if (isDuplicateEmail) return {
+            //邮箱已经被注册
+            __code_wrong: 40002
+        };
         const { email_code } = ctx.session;
         if ((email_code && email_code.expires < Math.floor(Date.now() / 1000)) || !email_code) {
             try {
@@ -601,7 +618,6 @@ export default class Test extends Service {
                     email,
                     expires: Math.floor(Date.now() / 1000) + ctx.app.config.email_exp,
                 }
-                console.log(res)
                 return res;
             } catch (error) {
                 return {

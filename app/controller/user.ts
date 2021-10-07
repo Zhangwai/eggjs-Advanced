@@ -78,36 +78,26 @@ class UserController extends Controller {
     }
 
     const { username, password, captcha } = ctx.request.body;
-    let captchaState = await ctx.service.user.checkCaptcha(captcha);
-    if (!captchaState.state) {
-      ctx.helper.body.VALIDATION_FAILED({ ctx, res: null, msg: captchaState["msg"] });
-    } else {
-      const res = await ctx.service.user.login({ username, password });
-      switch (res.__code_wrong) {
-        case undefined:
-          ctx.helper.body.SUCCESS({ ctx, res });
-          break;
-        case 40000:
-          ctx.helper.body.INVALID_REQUEST({ ctx, code: 40000, msg: '密码错误' });
-          break;
-        case 40004:
-          ctx.helper.body.INVALID_REQUEST({
-            ctx,
-            code: 40004,
-            msg: '用户不存在',
-          });
-          break;
-        case 40005:
-          ctx.helper.body.INVALID_REQUEST({
-            ctx,
-            code: 40005,
-            msg: '账号已停用',
-          });
-          break;
-        default:
-          ctx.helper.body.UNAUTHORIZED({ ctx });
-          break;
-      }
+    const res = await ctx.service.user.login({ username, password, captcha });
+    switch (res.__code_wrong) {
+      case undefined:
+        ctx.helper.body.SUCCESS({ ctx, res });
+        break;
+      case 40000:
+        ctx.helper.body.INVALID_REQUEST({ ctx, code: 40000, msg: '密码错误' });
+        break;
+      case 40004:
+        ctx.helper.body.INVALID_REQUEST({ ctx, code: 40004, msg: '用户不存在' });
+        break;
+      case 40005:
+        ctx.helper.body.INVALID_REQUEST({ ctx, code: 40005, msg: '账号已停用' });
+        break;
+      case 40001:
+        ctx.helper.body.INVALID_REQUEST({ ctx, code: 40001, msg: res.msg });
+        break;
+      default:
+        ctx.helper.body.UNAUTHORIZED({ ctx });
+        break;
     }
   }
   /**
@@ -149,7 +139,6 @@ class UserController extends Controller {
    */
   async uploadAvatar() {
     const { ctx } = this;
-    console.log(ctx.session, 312)
     let username = null;
     if (ctx.session.currentRequestData) {
       username = ctx.session.currentRequestData.userInfo.username;
@@ -230,12 +219,19 @@ class UserController extends Controller {
     //获取4位密码
     const code = ctx.helper.tools.getVerificationCode(4);
     const res = await ctx.service.user.getMailCode({ email, code });
-    if (res.__code_wrong === 40000) {
-      ctx.helper.body.NOT_FOUND({ ctx, res, msg: '邮箱发送失败', status: 200 })
-    } else if (res.__code_wrong === 40001) {
-      ctx.helper.body.NOT_FOUND({ ctx, res, msg: '操作频繁,60s后重试', status: 200 })
-    } else {
-      ctx.helper.body.SUCCESS({ ctx, res, msg: '邮件发送成功请注意查收', code: 0 })
+    switch (res.__code_wrong) {
+      case 40000:
+        ctx.helper.body.NOT_FOUND({ ctx, res, msg: '邮箱发送失败', status: 200 });
+        break;
+      case 40001:
+        ctx.helper.body.NOT_FOUND({ ctx, res, msg: '操作频繁,60s后重试', status: 200 });
+        break;
+      case 40002:
+        ctx.helper.body.NOT_FOUND({ ctx, res, msg: '邮箱已经被注册', status: 200 });
+        break;
+      default:
+        ctx.helper.body.SUCCESS({ ctx, res, msg: '邮件发送成功请注意查收', code: 0 });
+        break;
     }
   }
 }

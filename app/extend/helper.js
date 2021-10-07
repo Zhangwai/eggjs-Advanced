@@ -45,6 +45,33 @@ module.exports.tools = {
             secret
         );
     },
+
+
+
+    //随机生成n位验证码
+    getVerificationCode(n) {
+        const codes = [];
+        //数字
+        for (let i = 48; i <= 57; i++) {
+            codes.push(i);
+        }
+        //大写字母
+        for (let i = 65; i <= 90; i++) {
+            codes.push(i);
+        }
+        //小写字母
+        for (let i = 97; i <= 122; i++) {
+            codes.push(i);
+        }
+        let arr = [];
+        for (let i = 0; i < n; i++) {
+            let index = Math.floor(Math.random() * 62);
+            let char = String.fromCharCode(codes[index]);
+            arr.push(char)
+        }
+        return arr.join('');
+    }
+
 }
 
 module.exports.body = {

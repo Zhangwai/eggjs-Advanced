@@ -35,6 +35,13 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-validate',
   },
+  /**
+   * 发邮件
+   */
+  mailer: {
+    enable: true,
+    package: 'egg-mailer',
+  },
 };
 
 export default plugin;

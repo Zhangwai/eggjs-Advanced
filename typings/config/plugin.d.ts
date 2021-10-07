@@ -20,6 +20,7 @@ import 'egg-passport-github';
 import 'egg-jwt';
 import 'egg-cors';
 import 'egg-validate';
+import 'egg-mailer';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -41,5 +42,6 @@ declare module 'egg' {
     jwt?: EggPluginItem;
     cors?: EggPluginItem;
     validate?: EggPluginItem;
+    mailer?: EggPluginItem;
   }
 }

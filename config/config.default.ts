@@ -40,6 +40,18 @@ export default (appInfo: EggAppInfo) => {
     // callbackURL: '/passport/github/callback',
     // proxy: false,
   };
+  // console.log(process.env.MailerAuthUser,333333333333333333333)
+  config.mailer = {
+    host: 'smtp.qq.com',
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      // user: process.env.MailerAuthUser, // generated ethereal user
+      // pass: process.env.MailerAuthPass, // generated ethereal password
+      user: '1519214533@qq.com', // generated ethereal user
+      pass: 'mnqqdwwevztsbaea', // generated ethereal password
+    }
+  };
 
   /**
  * 接口安全配置
@@ -55,6 +67,7 @@ export default (appInfo: EggAppInfo) => {
     jwt_exp: 60 * 10, // jwt过期时间(秒)
     jwt_refresh_exp: 60 * 60 * 24 * 15, // refreshToken过期时间(秒)
     captcha_exp: 60 * 3,// captcha过期时间3分钟
+    email_exp: 60,//email接口60秒发一次
   };
   // the return config will combines to EggAppConfig
   return {

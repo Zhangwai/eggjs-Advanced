@@ -2,11 +2,13 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportAuthorizations = require('../../../app/model/authorizations');
 import ExportProjects = require('../../../app/model/projects');
 import ExportUsers = require('../../../app/model/users');
 
 declare module 'egg' {
   interface IModel {
+    Authorizations: ReturnType<typeof ExportAuthorizations>;
     Projects: ReturnType<typeof ExportProjects>;
     Users: ReturnType<typeof ExportUsers>;
   }

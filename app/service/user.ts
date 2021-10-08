@@ -686,4 +686,30 @@ export default class Test extends Service {
         }
         return new_res ? new_res : res;
     }
+    /**
+     * 第三方注册(git)
+     */
+    async registerByGithub(userInfo: { username: string, password: string }, user: { id: string, provider: string }) {
+        const { ctx } = this;
+        console.log(user, userInfo)
+        const { username } = userInfo;
+        const { id, provider } = user;
+        const auth = { id, username, provider };
+        let transaction;
+        try {
+            // 建立事务对象
+            transaction = await ctx.model.transaction()
+            //1、第三方和用户关联表写入数据
+            await ctx.service.oauth.createOAuthUser(auth, { transaction });
+            //2、注册的用户写入数据
+            await ctx.model.Users.create(userInfo, { transaction });
+            // 提交事务
+            await transaction.commit();
+            return true
+        } catch (error) {
+            console.log('事务回滚')
+            // 事务回滚
+            await transaction.rollback();
+        }
+    }
 }

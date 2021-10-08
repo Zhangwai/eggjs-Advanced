@@ -26,6 +26,12 @@ export default () => {
       charset: 'utf8',
     },
   };
+  config.passportGithub = {
+    key: 'a8f447bb192505331380',
+    secret: 'c5f2647c7fb387a54e62ff8603924340cb806f25',
+    // callbackURL: '/passport/github/callback',
+    // proxy: false,
+  };
 
   return config;
 };

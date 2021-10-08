@@ -34,12 +34,6 @@ export default (appInfo: EggAppInfo) => {
     // ],
     fileSize: '5mb',  // 最大5mb  
   };
-  config.passportGithub = {
-    key: 'a8f447bb192505331380',
-    secret: '13fef2ea81fbec0a020a14798b58929201502219',
-    // callbackURL: '/passport/github/callback',
-    // proxy: false,
-  };
   // console.log(process.env.MailerAuthUser,333333333333333333333)
   config.mailer = {
     host: 'smtp.qq.com',

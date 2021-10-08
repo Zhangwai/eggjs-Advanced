@@ -5,5 +5,7 @@ declare module 'egg' {
         mysql: any,
         redis: any,
         mailer: any,
+        uuidv4:any,
+        // passport:any
     }
 }

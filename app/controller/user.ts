@@ -1,3 +1,5 @@
+import { log } from "console";
+
 //node.js 文件操作对象
 const fs = require('fs');
 //node.js 路径操作对象

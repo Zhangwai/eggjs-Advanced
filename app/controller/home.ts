@@ -6,6 +6,7 @@ export default class HomeController extends Controller {
     //清空session
     ctx.session = null;
     console.log(ctx.session)
-    ctx.body = await ctx.service.test.sayHi('egg');
+    // ctx.body = await ctx.service.test.sayHi('egg');
+    await ctx.render('home')
   }
 }

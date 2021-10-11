@@ -1,0 +1,1 @@
+把该文件下面的postman的json文件导入postman来测试接口

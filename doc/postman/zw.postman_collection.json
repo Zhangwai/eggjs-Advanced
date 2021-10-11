@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "d09d8aac-268c-4d42-b9e1-3def5f834d29",
+		"name": "zw",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "用户",
+			"item": [
+				{
+					"name": "登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"datou\",\r\n    \"password\":\"123\",\r\n    \"captcha\":\"1r34\"\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7001/api/user/signIn",
+							"host": [
+								"localhost"
+							],
+							"port": "7001",
+							"path": [
+								"api",
+								"user",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "注册",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "发送图片验证码",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7001/api/captcha",
+							"host": [
+								"localhost"
+							],
+							"port": "7001",
+							"path": [
+								"api",
+								"captcha"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取当前登录用户具体信息",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7001/api/userInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "7001",
+							"path": [
+								"api",
+								"userInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "上传头像",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:7001/api/upload",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7001",
+							"path": [
+								"api",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user增删改查",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "获取邮箱验证码",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "鉴权（bug不要用）",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"datou\",\r\n    \"password\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7001/passport/local",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7001",
+							"path": [
+								"passport",
+								"local"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "好友",
+			"item": [
+				{
+					"name": "获取好友列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:7001/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7001",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "首页",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7001/",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		}
+	]
+}

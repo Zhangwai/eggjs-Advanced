@@ -1,9 +1,9 @@
 
 module.exports = app => {
   const Sequelize = app.Sequelize;
-  
+
   const user = app.model.define(
-    'users', //挂载到app.model里面的时候会把Users作为users的key值
+    'users',
     {
       id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
       username: Sequelize.STRING(60),

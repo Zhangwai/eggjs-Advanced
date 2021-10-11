@@ -14,13 +14,16 @@ import 'egg-schedule';
 import 'egg-static';
 import 'egg-jsonp';
 import 'egg-view';
+import 'egg-view-nunjucks';
 import 'egg-sequelize';
 import 'egg-passport';
 import 'egg-passport-github';
+import 'egg-passport-local';
 import 'egg-jwt';
 import 'egg-cors';
 import 'egg-validate';
 import 'egg-mailer';
+import 'egg-socket.io';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -36,12 +39,15 @@ declare module 'egg' {
     static?: EggPluginItem;
     jsonp?: EggPluginItem;
     view?: EggPluginItem;
+    nunjucks?: EggPluginItem;
     sequelize?: EggPluginItem;
     passport?: EggPluginItem;
     passportGithub?: EggPluginItem;
+    passportLocal?: EggPluginItem;
     jwt?: EggPluginItem;
     cors?: EggPluginItem;
     validate?: EggPluginItem;
     mailer?: EggPluginItem;
+    io?: EggPluginItem;
   }
 }

@@ -6,6 +6,12 @@ export default (appInfo: EggAppInfo) => {
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_zhangwai';
+  config.view = {
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.njk': 'nunjucks',
+    },
+  };
 
   // add your egg config in here
   config.middleware = [];

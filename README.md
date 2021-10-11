@@ -7,7 +7,10 @@
 ### Development
 
 ```bash
-$ npm i
+$ npm i 
+$ 在mysql创建名为chat-dev的数据库
+$ npx sequelize db:migrate //在chat-dev数据库创建相应的表
+$ (介绍)npm run generator-entity //开发小工具，这段代码目前会让数据库自动生成对应的表以及生成model字段、squelize-cli的代码，未完成全部功能。(开发时候用这里不用输入)
 $ npm run dev
 $ open http://localhost:7001/
 ```

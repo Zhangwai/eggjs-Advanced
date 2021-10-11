@@ -1,5 +1,3 @@
-import { log } from "console";
-
 //node.js 文件操作对象
 const fs = require('fs');
 //node.js 路径操作对象
@@ -78,7 +76,7 @@ class UserController extends Controller {
       ctx.body = error
       return;
     }
-
+    console.log(ctx.request.body,ctx.session,'登录进来了')
     const { username, password, captcha } = ctx.request.body;
     const res = await ctx.service.user.login({ username, password, captcha });
     switch (res.__code_wrong) {
@@ -145,6 +143,7 @@ class UserController extends Controller {
     if (ctx.session.currentRequestData) {
       username = ctx.session.currentRequestData.userInfo.username;
       const stream = await ctx.getFileStream();
+      //stream.fields拿到传过来的另外json
       const filename = md5(stream.filename + new Date()) +
         path.extname(stream.filename)//取出后缀名.jpg
           .toLocaleLowerCase();

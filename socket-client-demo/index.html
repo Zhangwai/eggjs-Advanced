@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 3rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        #form {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 0.25rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            height: 3rem;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+        }
+
+        #input {
+            border: none;
+            padding: 0 1rem;
+            flex-grow: 1;
+            border-radius: 2rem;
+            margin: 0.25rem;
+        }
+
+        #input:focus {
+            outline: none;
+        }
+
+        #form>button {
+            background: #333;
+            border: none;
+            padding: 0 1rem;
+            margin: 0.25rem;
+            border-radius: 3px;
+            outline: none;
+            color: #fff;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages>li {
+            padding: 0.5rem 1rem;
+        }
+
+        #messages>li:nth-child(odd) {
+            background: #efefef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 微软雅黑;
+            font-size: 12px;
+        }
+
+        .box {
+            width: 390px;
+            border: solid 1px #ddd;
+            background: #FFF;
+            position: absolute;
+            left: 20%;
+            top: 20%;
+            margin-left: -195px;
+            margin-top: -160px;
+            text-align: center;
+        }
+
+        .box h2 {
+            font-weight: normal;
+            color: #666;
+            font-size: 16px;
+            line-height: 40px;
+            overflow: hidden;
+            text-align: center;
+            border-bottom: solid 1px #ddd;
+            background: #f7f7f7;
+        }
+
+        .input_box {
+            width: 350px;
+            padding-bottom: 15px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h2>登陆</h2>
+
+        <div class="input_box">
+            <input id="uname" type="text" name="user" placeholder="请输入用户名">
+        </div>
+        <div class="input_box">
+            <input id="upass" type="password" name="psw" placeholder="请输入密码">
+        </div>
+        <div class="input_box">
+            <input id="code" type="text" name="code" placeholder="请输入code">
+        </div>
+        <div onclick="changeImg()">
+            <img id='captcha' src="http://127.0.0.1:7001/api/captcha" alt="">
+        </div>
+        <div id="error_box"><br></div>
+        <div class="input_box">
+            <button type="button" class="btn btn-primary" onclick="fnLogin()">登陆</button>&nbsp&nbsp&nbsp&nbsp
+            <a href="regist.html"><input type="button" class="btn btn-info" name="regist" value="注册"></a>
+        </div>
+
+
+
+    </div>
+
+    <div onclick="startSocket()" style="display: flex;flex-direction: column;justify-content: center;align-items: center;
+            width: 300px;height: 300px;box-shadow: 0px 0px 10px #ccc;border-radius: 30px;margin: 66px auto;">
+        <?xml version="1.0" encoding="utf-8"?>
+        <!-- Generator: Adobe Illustrator 23.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+        <svg xml:space="preserve" style="enable-background:new 0 0 226.772 328.819;" viewBox="0 0 226.772 328.819"
+            y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="图层_1"
+            version="1.1">
+            <g>
+                <g>
+                    <path d="M112.667,248.479c-2.013,0-4.083-0.035-6.153-0.104c-37.135-1.249-62.708-10.342-76.006-27.025
+                        c-12.005-15.062-9.174-30.571-9.047-31.224c0.146-0.756,0.713-1.361,1.458-1.556c24.936-6.507,51.369-9.807,78.565-9.807
+                        c53.324,0,92.068,12.848,92.454,12.978c0.849,0.286,1.404,1.102,1.359,1.996c-0.029,0.566-0.824,14.005-11.509,27.562
+                        c-9.773,12.399-30.047,27.181-71.109,27.181C112.674,248.479,112.672,248.479,112.667,248.479z"
+                        style="fill:#F9CB6B;"></path>
+                    <path d="M101.484,180.763c53.613,0,91.815,12.874,91.815,12.874s-2.674,52.843-80.632,52.843
+                        c-1.976,0-4.012-0.034-6.086-0.104c-93.366-3.141-83.157-55.87-83.157-55.87C51.142,183.272,77.814,180.763,101.484,180.763
+                         M101.484,176.763c-27.366,0-53.969,3.322-79.07,9.872c-1.49,0.389-2.624,1.598-2.917,3.11c-0.134,0.69-3.126,17.076,9.447,32.851
+                        c13.68,17.162,39.755,26.508,77.502,27.777c2.095,0.07,4.188,0.106,6.22,0.106c18.342,0,34.19-2.893,47.104-8.598
+                        c10.525-4.65,19.134-11.159,25.588-19.347c11.075-14.05,11.906-28.104,11.935-28.695c0.091-1.789-1.02-3.421-2.717-3.993
+                        C192.992,189.312,155.137,176.763,101.484,176.763L101.484,176.763z" style="fill:#0C220D;">
+                    </path>
+                </g>
+                <g>
+                    <path d="M107.83,221.205c-33.824-0.001-63.685-6.479-77.928-16.907
+                        c-19.117-13.995-5.254-40.601-5.112-40.868c0.333-0.625,0.973-1.028,1.681-1.058c0,0,144.32-6.083,144.348-6.083
+                        c0.324,0,0.645,0.079,0.932,0.23c1.101,0.58,26.984,14.387,28.038,29.983c0.391,5.785-2.576,10.977-8.818,15.43
+                        c-16.914,12.068-47.994,19.273-83.133,19.273C107.833,221.205,107.834,221.205,107.83,221.205z"
+                        style="fill:#BC7F49;"></path>
+                    <path d="M170.819,158.289c0,0,44.802,23.599,18.99,42.015c-18.274,13.038-50.585,18.901-81.978,18.901
+                        c-31.623,0-62.314-5.954-76.748-16.521c-17.94-13.133-4.529-38.314-4.529-38.314L170.819,158.289 M170.819,154.289
+                        c-0.056,0-0.112,0.001-0.168,0.004l-144.264,6.081c-1.417,0.06-2.696,0.865-3.362,2.116c-0.15,0.283-3.699,7.018-4.894,15.558
+                        c-1.67,11.934,1.993,21.57,10.59,27.864c14.571,10.667,44.884,17.293,79.11,17.293c36.076,0,66.803-7.16,84.301-19.645
+                        c6.845-4.884,10.093-10.669,9.652-17.193c-1.109-16.416-26.239-30.11-29.101-31.617
+                        C172.107,154.447,171.467,154.289,170.819,154.289L170.819,154.289z" style="fill:#0C220D;">
+                    </path>
+                </g>
+                <g>
+                    <path d="M111.988,200.531c-32.457,0-63.802-6.983-77.999-17.376c-18.983-13.897-8.001-41.384-7.888-41.66
+                        c0.296-0.723,0.986-1.207,1.766-1.239c0,0,144.32-6.083,144.348-6.083c0.284,0,0.565,0.061,0.824,0.178
+                        c0.854,0.386,20.945,9.623,24.143,24.071c1.36,6.146-0.512,12.241-5.564,18.115c-13.117,15.249-42.142,23.995-79.626,23.995
+                        C111.989,200.531,111.99,200.531,111.988,200.531z" style="fill:#DF9651;"></path>
+                    <path d="M172.215,136.173c0,0,37.065,16.764,17.887,39.059c-14.18,16.485-46.188,23.3-78.115,23.3
+                        c-31.325,0-62.572-6.562-76.817-16.99c-17.94-13.133-7.219-39.288-7.219-39.288L172.215,136.173 M172.215,132.173
+                        c-0.056,0-0.112,0.001-0.168,0.004l-144.264,6.081c-1.561,0.066-2.94,1.034-3.533,2.479c-0.12,0.293-2.943,7.266-3.411,16.022
+                        c-0.648,12.118,3.49,21.803,11.968,28.01c14.739,10.79,45.819,17.763,79.18,17.763c18.012,0,61.977-2.406,81.147-24.691
+                        c5.486-6.377,7.505-13.056,6.001-19.851c-3.412-15.415-24.381-25.058-25.272-25.461
+                        C173.345,132.293,172.783,132.173,172.215,132.173L172.215,132.173z" style="fill:#0C220D;">
+                    </path>
+                </g>
+                <g>
+                    <path d="M119.423,179.459c-8.707,0-16.055-2.734-19.655-7.314c-2.094-2.664-5.028-3.904-9.233-3.904
+                        c-4.651,0-10.152,1.547-15.472,3.042c-5.252,1.477-10.213,2.871-14.66,2.979c-0.151,0.003-0.298,0.005-0.443,0.005
+                        c-6.614,0-8.114-3.812-9.319-6.875c-1.328-3.376-2.475-6.291-10.652-6.291c-0.649,0-1.341,0.02-2.071,0.06
+                        c-0.642,0.035-1.258,0.052-1.854,0.052c-6.172,0-10.779-1.833-13.691-5.451c-4.758-5.909-3-14.282-2.923-14.635
+                        c0.097-0.444,0.343-0.843,0.697-1.128c19.849-16.044,45.396-24.18,75.934-24.18c49.781,0,96.27,22.038,96.733,22.261
+                        c0.336,0.161,0.62,0.413,0.82,0.727c5.085,7.963,6.422,11.635,5.109,14.032c-1.106,2.018-3.589,2.031-4.431,2.031
+                        c-0.005,0-0.011,0-0.017,0c-1.176,0-2.555-0.165-4.014-0.339c-1.714-0.205-3.656-0.437-5.57-0.437
+                        c-6.14,0-9.719,2.523-11.605,8.181c-2.435,7.301-7.172,8.833-10.718,8.833c-5.761,0-12.146-3.839-17.277-6.925
+                        c-1.612-0.969-3.667-2.205-4.969-2.786c0.064,0.293,0.159,0.658,0.297,1.108c1.084,3.534,0.578,6.863-1.465,9.627
+                        C134.981,177.535,126.257,179.459,119.423,179.459z" style="fill:#97B76B;"></path>
+                    <path
+                        d="M96.081,117.82c49.902,0,95.869,22.064,95.869,22.064c6.97,10.916,6.225,12.987,2.347,12.987
+                        c-2.372,0-5.917-0.775-9.584-0.775c-5.301,0-10.86,1.621-13.503,9.548c-1.848,5.541-5.077,7.466-8.821,7.466
+                        c-8.545,0-19.761-10.04-23.276-10.04c-1.163,0-1.484,1.1-0.586,4.025c2.894,9.43-8.046,14.366-19.103,14.366
+                        c-7.283,0-14.617-2.141-18.083-6.55c-2.727-3.469-6.507-4.668-10.805-4.668c-9.458,0-21.423,5.809-30.181,6.022
+                        c-0.134,0.003-0.265,0.005-0.394,0.005c-11.66,0-2.613-13.166-19.97-13.166c-0.684,0-1.412,0.021-2.182,0.063
+                        c-0.603,0.033-1.183,0.05-1.744,0.05c-18.515,0-14.659-17.659-14.659-17.659C43.486,123.705,70.308,117.82,96.081,117.82
+                         M96.081,113.82c-31.007,0-56.978,8.285-77.191,24.624c-0.708,0.572-1.199,1.368-1.393,2.257
+                        c-0.086,0.392-2.033,9.67,3.319,16.316c3.311,4.112,8.441,6.196,15.249,6.196c0.637,0,1.298-0.019,1.965-0.056
+                        c0.684-0.038,1.343-0.057,1.96-0.057c6.814,0,7.558,1.891,8.79,5.023c1.198,3.046,3.203,8.143,11.18,8.143
+                        c0.161,0,0.324-0.002,0.492-0.006c4.698-0.114,10.013-1.608,15.153-3.053c5.189-1.459,10.555-2.967,14.931-2.967
+                        c3.591,0,5.953,0.969,7.66,3.14c3.977,5.058,11.912,8.078,21.228,8.078c9.483,0,17.393-3.042,21.159-8.137
+                        c1.778-2.406,2.584-5.157,2.392-8.088c0.382,0.228,0.757,0.453,1.107,0.663c5.343,3.213,11.992,7.211,18.308,7.211
+                        c4.203,0,9.804-1.77,12.615-10.201c1.613-4.839,4.426-6.813,9.708-6.813c1.794,0,3.592,0.215,5.331,0.422
+                        c1.521,0.182,2.957,0.353,4.253,0.353c2.999,0,5.085-1.033,6.202-3.07c1.755-3.203,0.449-7.258-5.177-16.069
+                        c-0.401-0.628-0.969-1.131-1.64-1.453C191.77,135.361,146.315,113.82,96.081,113.82L96.081,113.82z"
+                        style="fill:#0C220D;"></path>
+                </g>
+                <g>
+                    <path d="M109.241,149.077c-31.234,0-61.427-4.745-89.741-14.104c-0.72-0.238-1.243-0.863-1.352-1.613
+                        c-0.129-0.893-2.971-22.071,13.016-40.79c14.98-17.54,41.034-26.687,77.438-27.188c0.787-0.011,1.569-0.016,2.343-0.016
+                        c45.094,0,66.913,18.539,77.276,34.091c11.254,16.89,11.745,33.564,11.76,34.265c0.019,0.857-0.511,1.631-1.317,1.924
+                        C198.294,135.781,161.059,149.077,109.241,149.077z" style="fill:#F79C39;"></path>
+                    <path
+                        d="M110.944,67.366c85.582-0.001,87.037,66.4,87.037,66.4s-36.676,13.31-88.741,13.31
+                        c-26.628,0-57.278-3.48-89.113-14.003c0,0-9.287-64.347,88.501-65.692C109.407,67.371,110.18,67.366,110.944,67.366
+                         M110.947,63.366C110.947,63.366,110.947,63.366,110.947,63.366C110.946,63.366,110.946,63.366,110.947,63.366
+                        c-0.001,0-0.001,0-0.002,0l0,0c-0.784,0-1.575,0.005-2.371,0.016c-37.004,0.509-63.56,9.892-78.931,27.888
+                        c-16.568,19.399-13.609,41.445-13.475,42.374c0.217,1.501,1.264,2.751,2.704,3.227c28.516,9.426,58.92,14.205,90.368,14.205
+                        c52.169,0,88.581-12.997,90.106-13.55c1.613-0.585,2.672-2.133,2.634-3.849c-0.016-0.725-0.526-17.962-12.101-35.33
+                        c-6.807-10.214-16.031-18.345-27.414-24.168C148.437,67.004,131.104,63.366,110.947,63.366L110.947,63.366z"
+                        style="fill:#0C220D;"></path>
+                </g>
+                <path d="M91.91,81.196c0,0-16.275,8.135-11.131,12.496C85.848,97.989,91.874,93.38,91.91,81.196z"
+                    style="fill:#0C220D;"></path>
+                <path d="M102.068,98.849c0,0-11.271,12.672-4.516,15.087C104.208,116.316,107.646,110.144,102.068,98.849z"
+                    style="fill:#0C220D;"></path>
+                <path d="M64.12,98.918c0,0-17.972,5.162-14.025,10.306C53.985,114.293,61.039,110.821,64.12,98.918z"
+                    style="fill:#0C220D;"></path>
+                <path d="M145.657,95.546c0,0,17.846,5.581,13.78,10.631C155.43,111.154,148.459,107.517,145.657,95.546z"
+                    style="fill:#0C220D;"></path>
+                <path d="M118.717,81.568c0,0,13.812,10.911,7.675,14.231C120.345,99.071,115.639,93.471,118.717,81.568z"
+                    style="fill:#0C220D;"></path>
+            </g>
+        </svg>
+
+
+
+        <span style="line-height: 36px;">来自 ZhangWai 的邮箱验证码：</span>
+        <div style="font-weight: 600;font-size: 22px;line-height: 46px;">点击开启socket</div>
+
+    </div>
+    <div id="userCounts"></div> <span id="userRef">刷新人数</span>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="./jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+        integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        function startSocket() {
+            if (!window.socket) {
+                
+                var socket = io('http://127.0.0.1:7001/', { 'transports': ['websocket'] })
+                var messages = document.getElementById('messages');
+                var form = document.getElementById('form');
+                var input = document.getElementById('input');
+                var userRef = document.getElementById('userRef');
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    if (input.value) {
+                        console.log(socket)
+                        socket.emit('sendMsg', input.value);
+                        input.value = '';
+                    }
+                });
+                userRef.addEventListener('click',function(e){
+                    e.preventDefault();
+                    socket.emit('count','123','456','789');
+                })
+                socket.on('returnMsg', function (msg) {
+                    var item = document.createElement('li');
+                    item.textContent = msg;
+                    messages.appendChild(item);
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
+                socket.on('count', function (msg) {
+                    var userCounts = document.getElementById('userCounts');
+                    userCounts.innerHTML = msg;
+                });
+
+                socket.on('connect', () => {
+                    const id = socket.id;
+                    console.log('#connect,', id, socket);
+                    // 监听自身 id 以实现 p2p 通讯
+                    socket.on(id, msg => {
+                        var item = document.createElement('li');
+                        item.textContent = msg;
+                        messages.appendChild(item);
+                        window.scrollTo(0, document.body.scrollHeight);
+                    });
+                });
+                // 监听别人 
+                socket.on('other', msg => {
+                    var item = document.createElement('li');
+                    item.textContent = msg;
+                    messages.appendChild(item);
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
+
+
+                // 接收在线用户信息
+                socket.on('online', msg => {
+                    console.log('#online,', msg);
+                });
+                // 系统事件
+                socket.on('disconnect', msg => {
+                    console.log('#disconnect', msg);
+                });
+                socket.on('disconnecting', () => {
+                    console.log('#disconnecting');
+                });
+
+                socket.on('error', () => {
+                    console.log('#error');
+                });
+                //挂载到全局
+                window.socket = socket;
+            }else{
+                alert('socket已经开启不要重复开启哦')
+            }
+        }
+
+    </script>
+    <script>
+        function fnLogin() {
+            var oUname = document.getElementById("uname")
+            var oUpass = document.getElementById("upass")
+            var oCode = document.getElementById("code")
+            var oError = document.getElementById("error_box")
+            const username = oUname.value;
+            const password = oUpass.value;
+            const captcha = oCode.value;
+            let data = JSON.stringify({
+                "username": username,
+                "password": password,
+                "captcha": captcha
+            });
+            console.log(typeof username, typeof password, typeof captcha)
+            var isError = true;
+            $.ajax({
+                type: "POST",
+                url: 'http://127.0.0.1:7001/api/user/signIn',
+                data: JSON.stringify({
+                    "username": username,
+                    "password": password,
+                    "captcha": captcha
+                }),
+                xhrFields: {
+                    withCredentials: true // 携带跨域cookie
+                },
+                dataType: 'json',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                // contentType: 'application/json; charset=UTF-8',
+                success: function (data) {
+                    console.log(data);
+                    alert('登录成功，去开启socket吧')
+                }
+            });
+
+        }
+        function changeImg() {
+            var captcha = document.getElementById("captcha")
+            captcha.src = "http://127.0.0.1:7001/api/captcha?" + Math.random();
+        }
+    </script>
+
+</body>
+
+</html>

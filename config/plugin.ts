@@ -2,10 +2,10 @@ import { EggPlugin } from 'egg';
 
 const plugin: EggPlugin = {
   // static: true,
-  // nunjucks: {
-  //   enable: true,
-  //   package: 'egg-view-nunjucks',
-  // },
+  nunjucks: {
+    enable: true,
+    package: 'egg-view-nunjucks',
+  },
   sequelize: {
     enable: true,
     package: 'egg-sequelize',
@@ -17,6 +17,10 @@ const plugin: EggPlugin = {
   passportGithub: {
     enable: true,
     package: 'egg-passport-github',
+  },
+  passportLocal: {
+    enable: true,
+    package: 'egg-passport-local',
   },
   //  鉴权
   jwt: {
@@ -41,6 +45,13 @@ const plugin: EggPlugin = {
   mailer: {
     enable: true,
     package: 'egg-mailer',
+  },
+  /**
+   * socket.io
+   */
+  io : {
+    enable: true,
+    package: 'egg-socket.io',
   },
 };
 

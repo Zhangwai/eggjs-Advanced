@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const dayjs = require('dayjs');
 const lodash = require('lodash');
 const path = require('path');
-const assert = require('assert')
+const assert = require('assert');
 class AppBootHook {
   constructor(app) {
     this.app = app;
@@ -33,41 +33,46 @@ class AppBootHook {
   async didReady() {
     const { app } = this;
     app.passport.verify(async (ctx, user) => {
-      console.log(user, ctx, 11111111)
+      console.log(user, ctx, 11111111);
       // 检查用户
-      assert(user.provider, 'user.provider should exists');
-      assert(user.id, 'user.id should exists');
-      // 从数据库中查找用户信息
-      //
-      // Authorization Table
-      // column   | desc
-      // ---      | --
-      // provider | provider name, like github, twitter, facebook, weibo and so on
-      // uid      | provider unique id
-      // user_id  | current application user id
+      const { provider, id, username, password } = user;
+      assert(provider, 'user.provider should exists');
+      if (provider === 'local') {
+        // 本地鉴权
+        assert(username, 'user.username should exists');
+        assert(password, 'user.password should exists');
+        const existsUser = await ctx.service.oauth.getOAuthUser(user);
+        console.log(existsUser, 11111111);
 
-      // const auth = await ctx.model.Authorizations.findOne({
-      //   uid: user.id,
-      //   provider: user.provider,
-      // });
+      } else {
+        // 第三方鉴权（有bug）
+        assert(id, 'user.id should exists');
+        // 从数据库中查找用户信息
+        //
+        // Authorization Table
+        // column   | desc
+        // ---      | --
+        // provider | provider name, like github, twitter, facebook, weibo and so on
+        // uid      | provider unique id
+        // user_id  | current application user id
+        try {
+          const existsUser = await ctx.service.oauth.getOAuthUser(user);
+          // 做缓存
+          // 出现bug未来得及开发
+          return existsUser;
+        } catch (error) {
+          // // 调用 service 注册新用户
+          const userInfo = {
+            username: uuidv4(),
+            password: 'github.123456',
+          };
+          const newUser = await ctx.service.user.registerByGithub(userInfo, user);
+          // 做缓存
+          // 出现bug未来得及开发
+          return newUser;
+        }
+      }
 
-      // const existsUser = await ctx.model.Users.findOne({ username: auth.user_username });
-      // console.log(auth, existsUser,1111111111111);
-
-      // try {
-      //   const existsUser = await ctx.service.oauth.getOAuthUser(user);
-      //   //做缓存
-
-      //   return existsUser;
-      // } catch (error) {
-      //   // // 调用 service 注册新用户
-      //   const userInfo = {
-      //     username: uuidv4(),
-      //     password: 'github.123456',
-      //   };
-      //   const newUser = await ctx.service.user.registerByGithub(userInfo, user);
-      //   return newUser;
-      // }
     });
 
     // 将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段

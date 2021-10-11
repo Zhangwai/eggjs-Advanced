@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'users',
+      'user_friends',
       {
         id: {
           allowNull: false,
@@ -13,40 +13,14 @@ module.exports = {
         username: {
           type: Sequelize.STRING(60),
           allowNull: false,
-          unique: true,
+          unique: false,
           comment: '用户名',
         },
-        nickname: {
+        friend: {
           type: Sequelize.STRING(60),
-          comment: '昵称',
-        },
-        password: {
-          type: Sequelize.STRING(64),
           allowNull: false,
-          comment: '用户密码',
-        },
-        email: {
-          type: Sequelize.STRING(60),
-          unique: true,
-          comment: '邮箱',
-        },
-        state: {
-          type: Sequelize.TINYINT,
-          allowNull: false,
-          defaultValue: '1',
-          comment: '状态：0.停用、1.正常',
-        },
-        phone: {
-          type: Sequelize.STRING(15),
-          comment: '手机号',
-        },
-        avatar: {
-          type: Sequelize.STRING(255),
-          comment: '头像url',
-        },
-        last_login: {
-          type: Sequelize.DATE,
-          comment: '最后登录时间',
+          unique: false,
+          comment: '好友的用户名',
         },
         deleted_at: {
           type: Sequelize.DATE,
@@ -66,6 +40,6 @@ module.exports = {
     );
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('user_friends');
   },
 };

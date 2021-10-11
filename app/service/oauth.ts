@@ -6,20 +6,34 @@ import { Service } from 'egg';
 export default class OAuth extends Service {
 
     /**
-     * 寻找是否用第三方注册过
+     * 寻找是否注册过 本地或三方
      * 
      */
-    public async getOAuthUser(user: { id: string, provider: string }) {
+    public async getOAuthUser(user: { id?: string, provider: string, username?: string, password?: string }) {
         const { ctx } = this;
-        const { id, provider } = user;
-        const data = await ctx.model.Authorizations.findOne({
-            where: {
-                uid: id,
-                provider
-            },
-            limit: 1
-        });
-        return data;
+        const { provider } = user;
+        if (provider === 'local') {
+            const { username, password } = user;
+            const data = await ctx.model.Users.findOne({
+                where: {
+                    username,
+                    password
+                },
+                limit: 1
+            })
+            return data;
+        } else if (provider === 'github') {
+            const { id } = user
+            const data = await ctx.model.Authorizations.findOne({
+                where: {
+                    uid: id,
+                    provider
+                },
+                limit: 1
+            });
+            return data;
+        }
+
     }
 
     /**

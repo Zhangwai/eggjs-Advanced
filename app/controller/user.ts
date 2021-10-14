@@ -76,7 +76,7 @@ class UserController extends Controller {
       ctx.body = error
       return;
     }
-    console.log(ctx.request.body,ctx.session,'登录进来了')
+    console.log(ctx.request.body, ctx.session, '登录进来了')
     const { username, password, captcha } = ctx.request.body;
     const res = await ctx.service.user.login({ username, password, captcha });
     switch (res.__code_wrong) {
@@ -234,6 +234,25 @@ class UserController extends Controller {
         ctx.helper.body.SUCCESS({ ctx, res, msg: '邮件发送成功请注意查收', code: 0 });
         break;
     }
+  }
+
+  /**
+  * @apikey
+  * @summary 预获取用户列表
+  * @description 有时候在一些场景（比如：添加好友）需要根据输入框内容获取用户列表。
+  * @router get /api/user/prefetchuser
+  */
+  async prefetchuser() {
+    const { ctx } = this;
+    try {
+      ctx.validate(ctx.rule.getFriendsRule, ctx.request.query);
+    } catch (error) {
+      ctx.body = error;
+      return;
+    }
+    const { username } = ctx.request.query;
+    const res = await ctx.service.user.getBlurUser(username);
+    res?ctx.helper.body.SUCCESS({ ctx, res }) : ctx.helper.body.NOT_FOUND({ ctx });
   }
 }
 

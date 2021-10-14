@@ -1,5 +1,5 @@
 import { Service } from 'egg';
-
+const { Op } = require('sequelize');
 /**
  * Test Service
  */
@@ -710,6 +710,47 @@ export default class Test extends Service {
             console.log('事务回滚')
             // 事务回滚
             await transaction.rollback();
+        }
+    }
+
+    /**
+     * 预获取用户
+     * 模糊查询
+     */
+
+    async getBlurUser(username: string) {
+        const { ctx } = this;
+        const users = await ctx.model.Users.findAll({
+            raw: true,
+            order: [
+                ['username', 'DESC']
+            ],  // 排序
+            where: {
+                // name: 'cheny', // 精确查询
+                username: {
+                    // 模糊查询
+                    [Op.like]: '%' + username + '%'
+                }
+            },
+            attributes: ['id', 'username'] // 控制查询字段
+        })
+        const emails = await ctx.model.Users.findAll({
+            raw: true,
+            order: [
+                ['email', 'DESC']
+            ],  // 排序
+            where: {
+                // name: 'cheny', // 精确查询
+                email: {
+                    // 模糊查询
+                    [Op.like]: '%' + username + '%'
+                }
+            },
+            attributes: ['id', 'email'] // 返回出去的字段
+        })
+        return {
+            users,
+            emails
         }
     }
 }

@@ -46,6 +46,7 @@ module.exports = app => {
   router.get('/api/userInfo', controller.user.userInfo);// 获取用户信息
   router.get('/api/captcha', controller.user.captcha);// 获取验证图片
   router.post('/api/user/getMailCode', controller.user.getMailCode);// 获取验证邮箱验证码
+  router.get('/api/prefetchuser', controller.user.prefetchuser);// 预获取用户列表
 
   router.get('/passport/github', github);// bug未解决
   router.get('/passport/github/callback', github);// bug未解决

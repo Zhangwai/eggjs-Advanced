@@ -30,6 +30,20 @@ module.exports = {
           unique: true,
           comment: '邮箱',
         },
+        age: {
+          type: Sequelize.INTEGER(10),
+          comment: '年龄',
+        },
+        sex: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          defaultValue: '2',
+          comment: '状态：0.女、1.男、2.保密',
+        },
+        sign: {
+          type: Sequelize.STRING(255),
+          comment: '签名',
+        },
         state: {
           type: Sequelize.TINYINT,
           allowNull: false,

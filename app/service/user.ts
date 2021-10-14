@@ -732,7 +732,7 @@ export default class Test extends Service {
                     [Op.like]: '%' + username + '%'
                 }
             },
-            attributes: ['id', 'username'] // 控制查询字段
+            attributes: ['id', 'username', 'nickname', 'avatar'] // 控制查询字段
         })
         const emails = await ctx.model.Users.findAll({
             raw: true,
@@ -746,7 +746,7 @@ export default class Test extends Service {
                     [Op.like]: '%' + username + '%'
                 }
             },
-            attributes: ['id', 'email'] // 返回出去的字段
+            attributes: ['id', 'email', 'nickname', 'avatar'] // 返回出去的字段
         })
         return {
             users,
